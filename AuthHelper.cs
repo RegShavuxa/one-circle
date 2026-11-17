@@ -29,7 +29,7 @@ namespace one_circle
             sub.SetTextColor(Color.ParseColor(isDark ? "#94A3B8" : "#475569")); sub.SetPadding(0, 0, 0, 32);
 
             var inpPhone = MakeInput(a, "Номер телефона (+7...)", InputTypes.ClassPhone, isDark);
-            var inpNick = MakeInput(a, "Никнейм (обязательно)", InputTypes.ClassText, isDark);
+            var inpNick = MakeInput(a, "Логин (обязательно)", InputTypes.ClassText, isDark);
             var inpName = MakeInput(a, "Имя и фамилия (не обязательно)", InputTypes.ClassText | InputTypes.TextVariationPersonName, isDark);
             var inpBirth = MakeInput(a, "Дата рождения (ДД.ММ.ГГГГ)", InputTypes.ClassDatetime | InputTypes.DatetimeVariationDate, isDark);
 
@@ -42,7 +42,7 @@ namespace one_circle
             {
                 string ph = inpPhone.Text?.Trim() ?? "", nk = inpNick.Text?.Trim() ?? "", fn = inpName.Text?.Trim() ?? "", bd = inpBirth.Text?.Trim() ?? "";
                 if (ph.Length < 10) { Toast.MakeText(a, "Введите корректный номер телефона", ToastLength.Short)?.Show(); return; }
-                if (nk.Length < 2) { Toast.MakeText(a, "Введите никнейм (минимум 2 символа)", ToastLength.Short)?.Show(); return; }
+                if (nk.Length < 2) { Toast.MakeText(a, "Введите логин (минимум 2 символа)", ToastLength.Short)?.Show(); return; }
                 if (bd.Length < 8) { Toast.MakeText(a, "Укажите дату рождения (ДД.ММ.ГГГГ)", ToastLength.Short)?.Show(); return; }
 
                 a.GetSharedPreferences("oc_auth", FileCreationMode.Private)?.Edit()?.PutString("phone", ph)?.PutString("nick", nk)?.PutString("fullname", fn)?.PutString("birth", bd)?.Apply();
@@ -67,7 +67,7 @@ namespace one_circle
             top.AddView(btnBack); top.AddView(lbl); root.AddView(top);
 
             var box = new LinearLayout(a) { Orientation = Orientation.Vertical }; box.SetPadding(45, 36, 45, 36);
-            var inpNick = MakeInput(a, "Никнейм", InputTypes.ClassText, isDark); inpNick.Text = prefs?.GetString("nick", "");
+            var inpNick = MakeInput(a, "Логин", InputTypes.ClassText, isDark); inpNick.Text = prefs?.GetString("nick", "");
             var inpName = MakeInput(a, "Имя и фамилия (не обязательно)", InputTypes.ClassText, isDark); inpName.Text = prefs?.GetString("fullname", "");
             var inpBirth = MakeInput(a, "Дата рождения", InputTypes.ClassDatetime, isDark); inpBirth.Text = prefs?.GetString("birth", "");
             var inpPhone = MakeInput(a, "Номер телефона", InputTypes.ClassPhone, isDark); inpPhone.Text = prefs?.GetString("phone", "");
@@ -84,7 +84,7 @@ namespace one_circle
             btnSave.Click += (s, e) =>
             {
                 string nk = inpNick.Text?.Trim() ?? "", fn = inpName.Text?.Trim() ?? "", bd = inpBirth.Text?.Trim() ?? "", ph = inpPhone.Text?.Trim() ?? "";
-                if (nk.Length < 2 || ph.Length < 10) { Toast.MakeText(a, "Проверьте никнейм и номер телефона", ToastLength.Short)?.Show(); return; }
+                if (nk.Length < 2 || ph.Length < 10) { Toast.MakeText(a, "Проверьте логин и номер телефона", ToastLength.Short)?.Show(); return; }
                 prefs?.Edit()?.PutString("nick", nk)?.PutString("fullname", fn)?.PutString("birth", bd)?.PutString("phone", ph)?.Apply();
                 Toast.MakeText(a, "Данные профиля обновлены!", ToastLength.Short)?.Show();
                 onBack();
